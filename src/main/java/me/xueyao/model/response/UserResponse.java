@@ -1,10 +1,14 @@
 package me.xueyao.model.response;
 
-import me.xueyao.model.entity.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
-public class UserResponse extends User {
+@Getter @Setter @NoArgsConstructor @ToString
+public class UserResponse{
     private Integer id;
 
     private String username;
@@ -17,53 +21,4 @@ public class UserResponse extends User {
 
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    @Override
-    public Boolean getDelete() {
-        return delete;
-    }
-
-    @Override
-    public void setDelete(Boolean delete) {
-        this.delete = delete;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

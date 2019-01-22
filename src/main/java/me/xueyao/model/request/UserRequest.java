@@ -1,9 +1,15 @@
 package me.xueyao.model.request;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
+@Getter @Setter @NoArgsConstructor @ToString
 public class UserRequest{
     private Integer id;
     @NotEmpty(message = "用户名不能为空")
