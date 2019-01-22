@@ -1,6 +1,7 @@
 package me.xueyao.mapper;
 
 import me.xueyao.model.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("id") Integer id);
 
     int insert(User record);
 
@@ -29,5 +30,5 @@ public interface UserMapper {
      * @author: Simon.Xue
      * @date: 2019/1/22 12:16
      */
-    User selectByUsername(String username);
+    User selectByUsername(@Param("username") String username);
 }

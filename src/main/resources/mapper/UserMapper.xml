@@ -109,7 +109,7 @@
   </select>
 
   <select id="selectByUsername" resultType="me.xueyao.model.entity.User" parameterType="java.lang.String">
-    selece <include refid="Base_Column_List"/>
+    select <include refid="Base_Column_List"/>
     from `user` where username = #{username} and is_delete = 0
   </select>
 </mapper>
