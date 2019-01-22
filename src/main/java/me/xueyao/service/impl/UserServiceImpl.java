@@ -1,5 +1,6 @@
 package me.xueyao.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import me.xueyao.common.BaseEnum;
 import me.xueyao.common.BaseResponse;
 import me.xueyao.mapper.UserMapper;
@@ -28,8 +29,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseResponse addUser(User user) {
         logger.info("添加用户>>>>");
+        BaseResponse baseResponse = new BaseResponse();
+        User userInfo = userMapper.selectByUsername(user.getUsername());
+        if (null != userInfo) {
+            logger.warn("添加用户名相同，请重试，userInfo = {}", JSONObject.toJSONString(userInfo));
+            baseResponse.setCode(BaseEnum.BADPARAM.getCode());
+            baseResponse.setMessage("添加用户名相同，请重试");
+            return baseResponse;
+        }
+        int insertCount = userMapper.insert(user);
+        if (1 > insertCount) {
+            logger.warn("添加用户失败，请重试");
+            baseResponse.setCode(BaseEnum.BADPARAM.getCode());
+            baseResponse.setMessage("添加用户失败，请重试");
+        }
+        baseResponse.setCode(BaseEnum.SUCCESS.getCode());
+        baseResponse.setMessage("添加用户成功");
         logger.info("添加用户<<<<");
-        return null;
+        return baseResponse;
     }
 
     @Override

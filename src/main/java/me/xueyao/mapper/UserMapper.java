@@ -21,4 +21,13 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     List<User> selectUser();
+
+    /**
+     * @Note: 根据用户名查询用户信息
+     * @param: username 用户名
+     * @return:
+     * @author: Simon.Xue
+     * @date: 2019/1/22 12:16
+     */
+    User selectByUsername(String username);
 }
