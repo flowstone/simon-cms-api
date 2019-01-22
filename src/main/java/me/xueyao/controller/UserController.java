@@ -2,12 +2,17 @@ package me.xueyao.controller;
 
 import me.xueyao.common.BaseEnum;
 import me.xueyao.common.BaseResponse;
+import me.xueyao.config.ValidationConfig;
 import me.xueyao.model.entity.User;
 import me.xueyao.model.request.UserRequest;
 import me.xueyao.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import java.util.Set;
 
 /**
  * @Description:
@@ -20,15 +25,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ValidationConfig validationConfig;
+    
     @PostMapping("/addUser")
     public BaseResponse addUser(@RequestBody UserRequest userRequest) {
+        BaseResponse baseResponse = validationUser(userRequest);
+        if (BaseEnum.BADPARAM.getCode() == baseResponse.getCode()) {
+            return baseResponse;
+        }
         User user = new User();
         BeanUtils.copyProperties(userRequest, user);
         return userService.addUser(user);
     }
 
+
+
     @PutMapping("/modifyUser")
     public BaseResponse modifyUser(@RequestBody UserRequest userRequest) {
+        BaseResponse baseResponse = validationUser(userRequest);
+        if (BaseEnum.BADPARAM.getCode() == baseResponse.getCode()) {
+            return baseResponse;
+        }
         User user = new User();
         BeanUtils.copyProperties(userRequest,  user);
         return userService.modifyUser(user);
@@ -57,6 +75,20 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-
+    /**
+     * @Note: 验证方法
+     * @param:UserRequest
+     * @return:
+     * @author: Simon.Xue
+     * @date: 2019/1/22 15:28
+     */
+    public BaseResponse validationUser(UserRequest userRequest) {
+        BaseResponse baseResponse = new BaseResponse(BaseEnum.BADPARAM);
+        Set<ConstraintViolation<UserRequest>> validate = validationConfig.getValidator().validate(userRequest);
+        for (ConstraintViolation<UserRequest> userRequestConstraintViolation : validate) {
+            baseResponse.setMessage(userRequestConstraintViolation.getMessage());
+        }
+        return baseResponse;
+    }
 
 }

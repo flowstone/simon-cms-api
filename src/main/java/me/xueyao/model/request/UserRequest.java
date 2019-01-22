@@ -1,17 +1,17 @@
 package me.xueyao.model.request;
 
-import me.xueyao.model.entity.User;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
-public class UserRequest extends User {
+public class UserRequest{
     private Integer id;
-
+    @NotEmpty(message = "用户名不能为空")
     private String username;
-
+    @NotEmpty(message = "密码不能为空")
     private String password;
 
-    private Boolean delete;
+    private Integer delete;
 
     private Date createTime;
 
@@ -41,13 +41,11 @@ public class UserRequest extends User {
         this.password = password == null ? null : password.trim();
     }
 
-    @Override
-    public Boolean getDelete() {
+    public Integer getDelete() {
         return delete;
     }
 
-    @Override
-    public void setDelete(Boolean delete) {
+    public void setDelete(Integer delete) {
         this.delete = delete;
     }
 
