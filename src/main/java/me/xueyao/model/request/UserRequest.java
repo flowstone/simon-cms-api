@@ -16,7 +16,6 @@ public class UserRequest{
     private String username;
     @NotEmpty(message = "密码不能为空")
     private String password;
-
     private Integer delete;
 
     private Date createTime;

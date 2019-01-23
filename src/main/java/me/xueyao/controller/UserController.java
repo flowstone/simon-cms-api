@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
+import javax.validation.Valid;
 import java.util.Set;
 
 /**
@@ -29,11 +29,7 @@ public class UserController {
     private ValidationConfig validationConfig;
     
     @PostMapping("/addUser")
-    public BaseResponse addUser(@RequestBody UserRequest userRequest) {
-        BaseResponse baseResponse = validationUser(userRequest);
-        if (BaseEnum.BADPARAM.getCode() == baseResponse.getCode()) {
-            return baseResponse;
-        }
+    public BaseResponse addUser(@RequestBody @Valid UserRequest userRequest) {
         User user = new User();
         BeanUtils.copyProperties(userRequest, user);
         return userService.addUser(user);
@@ -42,11 +38,7 @@ public class UserController {
 
 
     @PutMapping("/modifyUser")
-    public BaseResponse modifyUser(@RequestBody UserRequest userRequest) {
-        BaseResponse baseResponse = validationUser(userRequest);
-        if (BaseEnum.BADPARAM.getCode() == baseResponse.getCode()) {
-            return baseResponse;
-        }
+    public BaseResponse modifyUser(@RequestBody @Valid UserRequest userRequest) {
         User user = new User();
         BeanUtils.copyProperties(userRequest,  user);
         return userService.modifyUser(user);
@@ -82,6 +74,7 @@ public class UserController {
      * @author: Simon.Xue
      * @date: 2019/1/22 15:28
      */
+    @Deprecated
     public BaseResponse validationUser(UserRequest userRequest) {
         BaseResponse baseResponse = new BaseResponse(BaseEnum.BADPARAM);
         Set<ConstraintViolation<UserRequest>> validate = validationConfig.getValidator().validate(userRequest);
