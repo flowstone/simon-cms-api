@@ -1,6 +1,8 @@
 package me.xueyao.model.request;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +12,19 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Getter @Setter @NoArgsConstructor @ToString
+@ApiModel(value = "用户请求")
 public class UserRequest{
+    @ApiModelProperty(value = "主键")
     private Integer id;
+
     @NotEmpty(message = "用户名不能为空")
+    @ApiModelProperty(value = "用户名")
     private String username;
+
     @NotEmpty(message = "密码不能为空")
+    @ApiModelProperty(value = "密码")
     private String password;
+
     private Integer delete;
 
     private Date createTime;

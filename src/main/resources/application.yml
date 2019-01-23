@@ -17,3 +17,6 @@ mybatis:
     default-executor-type: reuse
     default-statement-timeout: 25000
     map-underscore-to-camel-case: true
+
+swagger:
+  enabled: true
