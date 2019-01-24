@@ -30,4 +30,6 @@ public class GlobalException {
         baseResponse.setMessage(e.getBindingResult().getFieldError().getDefaultMessage());
         return baseResponse;
     }
+
+
 }
